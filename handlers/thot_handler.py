@@ -1,4 +1,6 @@
 from handlers import BaseHandler
+from telegram.bot import Bot
+from telegram.update import Update
 from telegram.ext import CommandHandler
 from emoji import emojize
 
@@ -8,13 +10,9 @@ COMMAND_NAME = 'thot'
 class ThotHandler(BaseHandler):
 
     @staticmethod
-    def __thot(bot, update):
+    def __thot(bot: Bot, update: Update):
         """
-        Thot-ing around.
-        :param bot:
-        :type bot: telegram.bot.Bot
-        :param update:
-        :return:
+        Thot.
         """
         update.message.reply_text(
             emojize(':eggplant::peach:'))
