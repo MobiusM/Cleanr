@@ -1,6 +1,9 @@
+import logging
 from functools import wraps
 from telegram.chataction import ChatAction
 from consts import ADMINS
+
+logger = logging.getLogger(__name__)
 
 
 def send_typing_action(func):
@@ -32,7 +35,7 @@ def group_only(func):
     def wrapped(bot, update, *args, **kwargs):
         if update.message.chat.type == 'group':
             return func(bot, update, *args, **kwargs)
-        print("{} can only be used in a group.".format(update.message.text))
+        logger.log(logging.ERROR, f"{update.message.text} can only be used in a group chat.")
         return
 
     return wrapped
@@ -43,7 +46,7 @@ def private_only(func):
     def wrapped(bot, update, *args, **kwargs):
         if update.message.chat.type == 'private':
             return func(bot, update, *args, **kwargs)
-        print("{} can only be used in a private chat.".format(update.message.text))
+        logger.log(logging.ERROR, f"{update.message.text} can only be used in a private chat.")
         return
 
     return wrapped
