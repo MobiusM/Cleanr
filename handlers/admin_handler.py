@@ -2,7 +2,7 @@ from handlers import BaseHandler
 from telegram.bot import Bot
 from telegram.update import Update
 from telegram.ext import CommandHandler
-from utils import restricted
+from utils import restricted, private_only
 
 COMMAND_NAME = 'admin'
 
@@ -11,12 +11,12 @@ class AdminHandler(BaseHandler):
 
     @staticmethod
     @restricted
+    @private_only
     def __admin(bot: Bot, update: Update):
         """
         Handle Admin options from private chat
         """
-        if update.message.chat.type != 'group':
-            update.message.reply_text("Hello Daddy")
+        update.message.reply_text("Hello Daddy")
 
     @staticmethod
     def get_handler():

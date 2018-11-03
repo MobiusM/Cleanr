@@ -25,3 +25,25 @@ def restricted(func):
         return func(bot, update, *args, **kwargs)
 
     return wrapped
+
+
+def group_only(func):
+    @wraps(func)
+    def wrapped(bot, update, *args, **kwargs):
+        if update.message.chat.type == 'group':
+            return func(bot, update, *args, **kwargs)
+        print("{} can only be used in a group.".format(update.message.text))
+        return
+
+    return wrapped
+
+
+def private_only(func):
+    @wraps(func)
+    def wrapped(bot, update, *args, **kwargs):
+        if update.message.chat.type == 'private':
+            return func(bot, update, *args, **kwargs)
+        print("{} can only be used in a private chat.".format(update.message.text))
+        return
+
+    return wrapped
