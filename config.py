@@ -1,8 +1,10 @@
-from handlers import HelloHandler, ThotHandler
+from handlers import *
 from jobs import RepeatedHelloJob
 
 # Enabled command handlers (e.g. /hello)
-COMMAND_HANDLERS = [HelloHandler, ThotHandler]
+COMMAND_HANDLERS = [HelloHandler, ThotHandler, AdminHandler]
 
 # Enabled repeating jobs
-REPEATING_JOBS = [RepeatedHelloJob]
+# REPEATING_JOBS = [RepeatedHelloJob]
+REPEATING_JOBS = []
+

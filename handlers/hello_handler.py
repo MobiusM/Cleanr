@@ -1,5 +1,8 @@
 from handlers import BaseHandler
+from telegram.bot import Bot
+from telegram.update import Update
 from telegram.ext import CommandHandler
+from utils import send_typing_action
 
 COMMAND_NAME = 'hello'
 
@@ -7,13 +10,10 @@ COMMAND_NAME = 'hello'
 class HelloHandler(BaseHandler):
 
     @staticmethod
-    def __hello(bot, update):
+    @send_typing_action
+    def __hello(bot: Bot, update: Update):
         """
         Tell a user hello.
-        :param bot:
-        :type bot: telegram.bot.Bot
-        :param update:
-        :return:
         """
         update.message.reply_text(
             'Hello {}'.format(update.message.from_user.first_name))
