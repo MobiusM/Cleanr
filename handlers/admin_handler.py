@@ -2,7 +2,9 @@ from handlers import BaseHandler
 from telegram.bot import Bot
 from telegram.update import Update
 from telegram.ext import CommandHandler
-from utils import restricted, private_only
+from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
+from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
+from utils import restricted, private_only, build_menu
 
 COMMAND_NAME = 'admin'
 
@@ -16,7 +18,11 @@ class AdminHandler(BaseHandler):
         """
         Handle Admin options from private chat
         """
-        update.message.reply_text("Hello Daddy")
+        button_list = [
+            InlineKeyboardButton("Announce", callback_data='channel_announce')
+        ]
+        reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+        update.message.reply_text("Hello Daddy.\nChoose wisely!", reply_markup=reply_markup)
 
     @staticmethod
     def get_handler():
