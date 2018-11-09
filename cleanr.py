@@ -1,9 +1,9 @@
 import logging
 from telegram.ext import Updater
-from handlers import Handlers
-from jobs import Jobs
-
-from config import COMMAND_HANDLERS, REPEATING_JOBS
+from handlers_governor import Handlers
+from jobs_governor import Jobs
+from handlers.handlers_config import COMMAND_HANDLERS, CONVERSATION_HANDLERS
+from jobs.jobs_config import REPEATING_JOBS
 
 
 class Cleanr:
@@ -13,7 +13,9 @@ class Cleanr:
 
         self.updater = Updater(token)
         self.job_queue = self.updater.job_queue
-        self.handlers = Handlers(self.updater, command_handlers=COMMAND_HANDLERS)
+        self.handlers = Handlers(self.updater,
+                                 command_handlers=COMMAND_HANDLERS,
+                                 conversation_handlers=CONVERSATION_HANDLERS)
         self.jobs = Jobs(self.job_queue, repeated_jobs=REPEATING_JOBS)
 
     def start_bot(self):

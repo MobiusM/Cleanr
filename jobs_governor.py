@@ -1,3 +1,4 @@
+import logging
 from typing import List
 from jobs import BaseJob
 from telegram.ext import JobQueue
@@ -9,6 +10,7 @@ class Jobs:
     """
 
     def __init__(self, job_queue: JobQueue, repeated_jobs: List[BaseJob] = None):
+        self.logger = logging.getLogger(__name__)
         self.job_queue = job_queue
         self.repeated_jobs = repeated_jobs
 
@@ -22,5 +24,8 @@ class Jobs:
         """
         Initialize all command handlers.
         """
-        for job in self.repeated_jobs:
-            job.set_job(self.job_queue)
+        if self.repeated_jobs is not None:
+            for job in self.repeated_jobs:
+                job.set_job(self.job_queue)
+        else:
+            self.logger.warning('No repeating jobs are enabled.')

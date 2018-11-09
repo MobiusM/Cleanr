@@ -1,6 +1,7 @@
 from jobs import BaseJob
 from telegram.bot import Bot
 from telegram.ext import JobQueue, Job
+from telegram.ext.dispatcher import run_async
 
 from consts import CLEANING_GROUP_ID
 
@@ -12,6 +13,7 @@ JOB_FIRST = 0
 class RepeatedHelloJob(BaseJob):
 
     @staticmethod
+    @run_async
     def __every_minute(bot: Bot, job: Job):
         """
         Say hello periodically.

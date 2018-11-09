@@ -1,7 +1,8 @@
-from handlers import BaseHandler
+from handlers.base_handler import BaseHandler
 from telegram.bot import Bot
 from telegram.update import Update
 from telegram.ext import CommandHandler
+from telegram.ext.dispatcher import run_async
 from utils import send_typing_action
 
 COMMAND_NAME = 'hello'
@@ -10,6 +11,7 @@ COMMAND_NAME = 'hello'
 class HelloHandler(BaseHandler):
 
     @staticmethod
+    @run_async
     @send_typing_action
     def __hello(bot: Bot, update: Update):
         """

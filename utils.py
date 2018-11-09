@@ -1,7 +1,7 @@
 import logging
 from functools import wraps
+from mwt import mwt
 from telegram.chataction import ChatAction
-from consts import ADMINS
 
 logger = logging.getLogger(__name__)
 
@@ -18,47 +18,37 @@ def send_typing_action(func):
     return command_func
 
 
-def restricted(func):
-    @wraps(func)
-    def wrapped(bot, update, *args, **kwargs):
-        user_id = update.effective_user.id
-        if user_id not in ADMINS:
-            print("Unauthorized access denied for {}.".format(user_id))
-            return
-        return func(bot, update, *args, **kwargs)
-
-    return wrapped
-
-
 def group_only(func):
+    """
+    Use callback function only in a group.
+    """
+
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
         if update.message.chat.type == 'group':
             return func(bot, update, *args, **kwargs)
-        logger.log(logging.ERROR, f"{update.message.text} can only be used in a group chat.")
+        logger.error(f"{update.message.text} can only be used in a group chat.")
         return
 
     return wrapped
 
 
 def private_only(func):
+    """
+    Use callback function only in a private chat.
+    """
+
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
         if update.message.chat.type == 'private':
             return func(bot, update, *args, **kwargs)
-        logger.log(logging.ERROR, f"{update.message.text} can only be used in a private chat.")
+        logger.error(f"{update.message.text} can only be used in a private chat.")
         return
 
     return wrapped
 
 
-def build_menu(buttons,
-               n_cols,
-               header_buttons=None,
-               footer_buttons=None):
-    menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
-    if header_buttons:
-        menu.insert(0, header_buttons)
-    if footer_buttons:
-        menu.append(footer_buttons)
-    return menu
+@mwt(timeout=60 * 60)
+def get_admin_ids(bot, chat_id):
+    """Returns a list of admin IDs for a given chat. Results are cached for 1 hour."""
+    return [admin.user.id for admin in bot.get_chat_administrators(chat_id)]
