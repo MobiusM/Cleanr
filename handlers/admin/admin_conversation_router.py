@@ -1,9 +1,10 @@
-from .admin_config import ANNOUNCE, INPUT
-from handlers.base_handler import BaseHandler
-from handlers.admin.admin_handler import AdminStartHandler
-from handlers.admin.announce_handler import AdminAnnounceHandler
-from handlers.admin.announce_input_handler import AdminInputHandler
 from telegram.ext import ConversationHandler
+
+from handlers.admin.admin_handler import AdminHandler
+from handlers.admin.announcement_handler import AdminAnnouncementHandler
+from handlers.admin.input_handler import InputHandler
+from handlers.base_handler import BaseHandler
+from .admin_config import ANNOUNCE, INPUT
 
 COMMAND_NAME = 'admin_menu'
 
@@ -13,19 +14,19 @@ class AdminHandler(BaseHandler):
     @staticmethod
     def __get_entry_points():
         return [
-            AdminStartHandler.get_handler()
+            AdminHandler.get_handler()
         ]
 
     @staticmethod
     def __get_states():
         return {
-            ANNOUNCE: [AdminAnnounceHandler.get_handler()],
-            INPUT: [AdminInputHandler.get_handler()]
+            ANNOUNCE: [AdminAnnouncementHandler.get_handler()],
+            INPUT: [InputHandler.get_handler()]
         }
 
     @staticmethod
     def __get_fallbacks():
-        return [AdminStartHandler.get_handler()]
+        return [AdminHandler.get_handler()]
 
     @staticmethod
     def get_handler():

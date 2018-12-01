@@ -1,7 +1,9 @@
-from typing import List
 import logging
-from handlers.base_handler import BaseHandler
+from typing import List
+
 from telegram.ext import Updater
+
+from handlers.base_handler import BaseHandler
 
 
 class Handlers:

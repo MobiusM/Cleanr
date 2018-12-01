@@ -1,9 +1,9 @@
-from jobs import BaseJob
 from telegram.bot import Bot
 from telegram.ext import JobQueue, Job
 from telegram.ext.dispatcher import run_async
 
 from consts import CLEANING_GROUP_ID
+from jobs import BaseJob
 
 JOB_NAME = 'repeated_hello_job'
 JOB_INTERVAL = 60

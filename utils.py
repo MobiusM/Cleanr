@@ -1,5 +1,6 @@
 import logging
 from functools import wraps
+
 from mwt import mwt
 from telegram.chataction import ChatAction
 
@@ -52,3 +53,24 @@ def private_only(func):
 def get_admin_ids(bot, chat_id):
     """Returns a list of admin IDs for a given chat. Results are cached for 1 hour."""
     return [admin.user.id for admin in bot.get_chat_administrators(chat_id)]
+
+
+def group_admin_only(group_id):
+    """
+    Limit a function to admin use only.
+    """
+
+    def wrapped_wrapper(func):
+        @wraps(func)
+        def wrapped(bot, update, *args, **kwargs):
+            if update.message.from_user.id in get_admin_ids(bot, group_id):
+                return func(bot, update, *args, **kwargs)
+            else:
+                update.message.reply_text(text="Invalid permissions.")
+                logger.warning(
+                    f"{update.message.from_user.username} has tried calling an admin only command: {update.message.text}")
+                return
+
+        return wrapped
+
+    return wrapped_wrapper

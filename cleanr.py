@@ -1,14 +1,16 @@
 import logging
+
 from telegram.ext import Updater
-from handlers_governor import Handlers
-from jobs_governor import Jobs
+
 from handlers.handlers_config import COMMAND_HANDLERS, CONVERSATION_HANDLERS
+from handlers_governor import Handlers
 from jobs.jobs_config import REPEATING_JOBS
+from jobs_governor import Jobs
 
 
 class Cleanr:
     def __init__(self, token):
-        logging.basicConfig(level=logging.DEBUG,
+        logging.basicConfig(level=logging.INFO,
                             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
         self.updater = Updater(token)

@@ -1,10 +1,11 @@
-from handlers.base_handler import BaseHandler
+from emoji import emojize
 from telegram.bot import Bot
-from telegram.update import Update
 from telegram.ext import CommandHandler
 from telegram.ext.dispatcher import run_async
+from telegram.update import Update
+
+from handlers.base_handler import BaseHandler
 from utils import send_typing_action
-from emoji import emojize
 
 COMMAND_NAME = 'thot'
 

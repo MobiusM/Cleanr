@@ -1,7 +1,9 @@
 import logging
 from typing import List
-from jobs import BaseJob
+
 from telegram.ext import JobQueue
+
+from jobs import BaseJob
 
 
 class Jobs:

@@ -7,4 +7,4 @@ ANNOUNCE, INPUT = range(2)
 #               [KeyboardButton(text='Done')]]
 
 # Available options available to the admin.
-ADMIN_MENU_MARKUP = [[KeyboardButton(text='Announce message', callback_data=str(ANNOUNCE))]]
+ADMIN_MENU_MARKUP = [[KeyboardButton(text='Announcement')]]
